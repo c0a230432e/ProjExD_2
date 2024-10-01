@@ -1,6 +1,7 @@
 import os
 import random
 import sys
+import time
 import pygame as pg
 
 
@@ -32,6 +33,7 @@ def main():
     screen = pg.display.set_mode((WIDTH, HEIGHT))
     bg_img = pg.image.load("fig/pg_bg.jpg")    
     kk_img = pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 0.9)
+    kk_cry = pg.image.load("fig/8.png")
     kk_rct = kk_img.get_rect()
     kk_rct.center = 300, 200
     bb_img = pg.Surface((20, 20))
@@ -41,6 +43,8 @@ def main():
     bb_rct.centerx = random.randint(0, WIDTH)
     bb_rct.centery = random.randint(0, HEIGHT)
     vx, vy = +5, -5
+    go_ft = pg.font.Font(None, 80)
+
     clock = pg.time.Clock()
     tmr = 0
     while True:
@@ -50,7 +54,16 @@ def main():
         screen.blit(bg_img, [0, 0]) 
         if kk_rct.colliderect(bb_rct):
             # こうかとんと爆弾が重なっていたら
-            print("GameOver")
+            go = pg.Surface((WIDTH, HEIGHT))
+            pg.draw.rect(go, (0, 0, 0), pg.Rect(0, 0, WIDTH, HEIGHT))
+            go.set_alpha(200)
+            go_txt = go_ft.render("GameOver", True, (255, 255, 255))
+            screen.blit(go, [0, 0])
+            screen.blit(go_txt, [WIDTH/2-160, HEIGHT/2-40])
+            screen.blit(kk_cry, [WIDTH/2-240, HEIGHT/2-50])
+            screen.blit(kk_cry, [WIDTH/2+160, HEIGHT/2-50])
+            pg.display.update()
+            time.sleep(5)
             return
         key_lst = pg.key.get_pressed()
         sum_mv = [0, 0]  # 横座標, 縦座標
