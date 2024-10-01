@@ -37,7 +37,7 @@ def main():
     kk_img = pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 0.9)
     kk_cry = pg.image.load("fig/8.png")
     kk_rct = kk_img.get_rect()
-    # kk_rct.center = 300, 200
+    kk_rct.center = 300, 200
     bb_img = pg.Surface((20, 20))
     pg.draw.circle(bb_img, (255, 0, 0), (10, 10), 10)
     bb_img.set_colorkey((0, 0, 0))
@@ -87,14 +87,14 @@ def main():
         screen.blit(kk_img, kk_rct)
         screen.blit(bb_img, bb_rct)
         yoko, tate = check_bound(bb_rct)
-        avx = vx*bb_accs[min(tmr//500, 9)]
-        avy = vy*bb_accs[min(tmr//500, 9)]
+        # avx = vx*bb_accs[min(tmr//500, 9)]
+        # avy = vy*bb_accs[min(tmr//500, 9)]
         if not yoko:
-            avx *= -1
+            vx *= -1
         if not tate:
-            avy *= -1
+            vy *= -1
         
-        bb_rct.move_ip(avx, avy)  # 爆弾移動
+        bb_rct.move_ip(vx, vy)  # 爆弾移動
         pg.display.update()
         tmr += 1
         clock.tick(50)
